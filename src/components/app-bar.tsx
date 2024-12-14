@@ -2,12 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation'; // Import usePathname
+import { useAuth } from '@/lib/auth-context';
 
 export function AppBar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [formattedDate, setFormattedDate] = useState('');
 
   const pathname = usePathname(); // Get the current pathname
+
+  const { isLoggedIn } = useAuth();
 
   // Determine the title based on the current pathname
   const getTitle = () => {
@@ -48,6 +51,10 @@ export function AppBar() {
       setFormattedDate(formatted);
     }
   }, [currentDate]);
+
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-10 bg-white border-b">

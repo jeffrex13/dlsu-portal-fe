@@ -1,74 +1,98 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Logo } from '@/components/logo';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { useAuth } from '@/lib/auth-context';
+import { useState } from 'react';
+import { Logo } from '@/components/logo'; // Adjust the import based on your project structure
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
-  const { login, isLoggedIn } = useAuth();
 
-  useEffect(() => {
-    console.log('Is logged in:', isLoggedIn);
-  }, [isLoggedIn]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    login(username, password);
-    router.push('/dashboard');
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Handle login logic here
+  // };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-      <Logo />
-      <Card className="w-[350px]">
-        <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>
-            Enter your credentials to access the dashboard.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
+    <div className="flex min-h-screen">
+      {/* Left Side: Form */}
+      <div className="flex flex-col justify-between items-center w-[50%] p-8">
+        {' '}
+        {/* Use justify-between to push footer down */}
+        <div className="my-auto">
+          <h1 className="text-2xl font-bold text-[#00bc65]">
+            Sign-in to your account
+          </h1>
+          <p className="text-sm text-gray-600">
+            Ready to dive in? Just sign in to continue where you left off.
+          </p>
+          <form className="space-y-4 mt-4">
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Employee ID
+              </label>
+              <input
                 id="username"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
             </div>
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
+            <button
+              type="submit"
+              className="w-full bg-[#00bc65] text-white py-2 rounded-md"
+            >
+              Sign In
+            </button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+        {/* Footer Section */}
+        <footer className="mt-4 text-center text-sm text-gray-500">
+          <p>Powered by ELID Technology Intl., Inc.</p>
+          <p>Version 1.0.0</p>
+        </footer>
+      </div>
+
+      {/* Right Side: Background Image */}
+      <div className="relative w-[50%] h-[95vh] bg-[#02a65b] rounded-xl my-auto mr-6">
+        <div
+          style={{
+            backgroundImage: 'url(/image-pattern.png)', // Adjust the path as needed
+            // backgroundSize: 'cover',
+            // backgroundPosition: 'center',
+            opacity: 0.05, // Adjust opacity to make the image less noticeable
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 0,
+          }}
+        />
+        <div className="relative z-10 flex flex-col items-center justify-center h-full">
+          <Logo />
+        </div>
+      </div>
     </div>
   );
 }
